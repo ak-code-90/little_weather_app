@@ -2,10 +2,12 @@ import { useState } from 'react';
 import './App.css';
 import coldImg from './assets/cold-bg.jpg';
 import warmImg from './assets/warm-bg.jpg';
+import dotenv from 'dotenv';
+import path from 'path';
 
 /*Création d'un objet avec les information utiles relative à l'API https://openweathermap.org/api/one-call-3 */
 const api = {
-  key: '12dccb8e443a52ce795059df606a30c6',
+  key: `${import.meta.env.VITE_WEATHER_API_KEY}`, // import de la clé stockée dans la variable d'environnement du fichier .env
   baseUrl: 'https://api.openweathermap.org/data/2.5/',
 };
 
@@ -13,6 +15,7 @@ function App() {
   const [userInput, setUserInput] = useState('');
   const [weather, setWeather] = useState({});
 
+  // Requête API lorsque l'utilisateur saisit  une ville
   const search = (event) => {
     if (event.key === 'Enter')
       fetch(
@@ -26,7 +29,6 @@ function App() {
         });
   };
 
-  //Fonctions
   //Récupération et formatage de la date d'aujourd'hui
   const dateBuilder = () => {
     let date = String(new window.Date());
@@ -58,6 +60,8 @@ function App() {
             ? 'https://images.pexels.com/photos/8589272/pexels-photo-8589272.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Mist'
             ? 'https://images.pexels.com/photos/2582768/pexels-photo-2582768.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            : weather.weather[0].main === 'Haze'
+            ? 'https://images.pexels.com/photos/7240659/pexels-photo-7240659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Snow'
             ? 'https://images.pexels.com/photos/3623207/pexels-photo-3623207.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Clear' &&
@@ -94,6 +98,8 @@ function App() {
                   ? 'Ensoleillé'
                   : weather.weather[0].main === 'Mist'
                   ? 'Brumeux'
+                  : weather.weather[0].main === 'Haze'
+                  ? 'Brouillard Urbain'
                   : weather.weather[0].main === 'Snow'
                   ? 'Enneigé'
                   : weather.weather[0].main === 'Rain'
