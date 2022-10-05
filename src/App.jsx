@@ -86,7 +86,7 @@ function App() {
             </div>
 
             <div className="weatherbox">
-              <div className="temp">{Math.round(weather.main.temp)}</div>
+              <div className="temp">{Math.round(weather.main.temp)}°</div>
               <div className="weather">
                 {weather.weather[0].main === 'Clouds'
                   ? 'Nuageux'
@@ -96,6 +96,8 @@ function App() {
                   ? 'Brumeux'
                   : weather.weather[0].main === 'Snow'
                   ? 'Enneigé'
+                  : weather.weather[0].main === 'Rain'
+                  ? 'Pluvieux'
                   : weather.weather[0].main}
               </div>
             </div>
