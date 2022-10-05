@@ -54,6 +54,8 @@ function App() {
             ? warmImg
             : weather.weather[0].main === 'Clouds'
             ? 'https://images.pexels.com/photos/3941855/pexels-photo-3941855.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            : weather.weather[0].main === 'Rain'
+            ? 'https://images.pexels.com/photos/8589272/pexels-photo-8589272.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Mist'
             ? 'https://images.pexels.com/photos/2582768/pexels-photo-2582768.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Snow'
