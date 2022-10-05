@@ -60,7 +60,8 @@ function App() {
             ? 'https://images.pexels.com/photos/2582768/pexels-photo-2582768.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Snow'
             ? 'https://images.pexels.com/photos/3623207/pexels-photo-3623207.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            : 'https://images.pexels.com/photos/6858608/pexels-photo-6858608.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            : weather.weather[0].main === 'Clear' &&
+              'https://images.pexels.com/photos/6858608/pexels-photo-6858608.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
         }
         alt="arrière plan hiver"
       />
