@@ -62,6 +62,8 @@ function App() {
             ? 'https://images.pexels.com/photos/2582768/pexels-photo-2582768.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Haze'
             ? 'https://images.pexels.com/photos/7240659/pexels-photo-7240659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            : weather.weather[0].main === 'Fog'
+            ? 'https://images.pexels.com/photos/226460/pexels-photo-226460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Snow'
             ? 'https://images.pexels.com/photos/3623207/pexels-photo-3623207.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Clear' &&
