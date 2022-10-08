@@ -13,6 +13,27 @@
   transition: 0.4s ease-out;
 }
 
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  margin: 0 auto;
+  padding: 10px;
+  border: 6px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 22px;
+  animation: rotate 1s infinite linear;
+  height: 0;
+  width: 0;
+}
+
 main {
   padding: 25px;
 }

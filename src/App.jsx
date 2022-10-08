@@ -6,28 +6,6 @@ import dotenv from 'dotenv';
 import path from 'path';
 import styled, { keyframes } from 'styled-components';
 
-//création d'un loader
-const rotate = keyframes`
-    from {
-        transform: rotate(0deg);
-    }
- 
-    to {
-    transform: rotate(360deg);
-    }
-`;
-
-const Loader = styled.div`
-  margin: 0 auto;
-  padding: 10px;
-  border: 6px solid #fff;
-  border-bottom-color: transparent;
-  border-radius: 22px;
-  animation: ${rotate} 1s infinite linear;
-  height: 0;
-  width: 0;
-`;
-
 /*Création d'un objet avec les information utiles relative à l'API */
 const api = {
   key: `${import.meta.env.VITE_WEATHER_API_KEY}`, // import de la clé stockée dans la variable d'environnement du fichier .env
@@ -145,7 +123,7 @@ function App() {
                 </div>{' '}
               </>
             ) : (
-              <Loader />
+              <div className="loader"></div>
             )}
           </div>
         ) : (
