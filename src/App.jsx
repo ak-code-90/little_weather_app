@@ -4,8 +4,31 @@ import coldImg from './assets/cold-bg.jpg';
 import warmImg from './assets/warm-bg.jpg';
 import dotenv from 'dotenv';
 import path from 'path';
+import styled, { keyframes } from 'styled-components';
 
-/*Création d'un objet avec les information utiles relative à l'API https://openweathermap.org/api/one-call-3 */
+//création d'un loader
+const rotate = keyframes`
+    from {
+        transform: rotate(0deg);
+    }
+ 
+    to {
+    transform: rotate(360deg);
+    }
+`;
+
+const Loader = styled.div`
+  margin: 0 auto;
+  padding: 10px;
+  border: 6px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 22px;
+  animation: ${rotate} 1s infinite linear;
+  height: 0;
+  width: 0;
+`;
+
+/*Création d'un objet avec les information utiles relative à l'API */
 const api = {
   key: `${import.meta.env.VITE_WEATHER_API_KEY}`, // import de la clé stockée dans la variable d'environnement du fichier .env
   baseUrl: 'https://api.openweathermap.org/data/2.5/',
@@ -14,10 +37,12 @@ const api = {
 function App() {
   const [userInput, setUserInput] = useState('');
   const [weather, setWeather] = useState({});
+  const [isDataLoading, setDataLoading] = useState(false);
 
   // Requête API lorsque l'utilisateur saisit  une ville
   const search = (event) => {
-    if (event.key === 'Enter')
+    if (event.key === 'Enter') {
+      setDataLoading(true); // tant que les informations n'ont pas été récupérées, le state du loader est sur true
       fetch(
         `${api.baseUrl}weather?q=${userInput}&units=metric&APPID=${api.key}`
       )
@@ -26,7 +51,9 @@ function App() {
           setWeather(result);
           console.log(result);
           setUserInput('');
+          setDataLoading(false);
         });
+    }
   };
 
   //Récupération et formatage de la date d'aujourd'hui
@@ -60,10 +87,12 @@ function App() {
             ? 'https://images.pexels.com/photos/8589272/pexels-photo-8589272.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Mist'
             ? 'https://images.pexels.com/photos/2582768/pexels-photo-2582768.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            : weather.weather[0].main === 'Smoke'
+            ? 'https://images.pexels.com/photos/7240659/pexels-photo-7240659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Haze'
             ? 'https://images.pexels.com/photos/7240659/pexels-photo-7240659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Fog'
-            ? 'https://images.pexels.com/photos/226460/pexels-photo-226460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+            ? 'https://images.pexels.com/photos/939807/pexels-photo-939807.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Snow'
             ? 'https://images.pexels.com/photos/3623207/pexels-photo-3623207.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             : weather.weather[0].main === 'Clear' &&
@@ -84,31 +113,38 @@ function App() {
         </div>
         {typeof weather.main != 'undefined' ? (
           <div>
-            <div className="location-box">
-              <div className="location">
-                {weather.name} , {weather.sys.country}
-              </div>
-              <div className="date">{dateBuilder()}</div>
-            </div>
-
-            <div className="weatherbox">
-              <div className="temp">{Math.round(weather.main.temp)}°</div>
-              <div className="weather">
-                {weather.weather[0].main === 'Clouds'
-                  ? 'Nuageux'
-                  : weather.weather[0].main === 'Clear'
-                  ? 'Ensoleillé'
-                  : weather.weather[0].main === 'Mist'
-                  ? 'Brumeux'
-                  : weather.weather[0].main === 'Haze'
-                  ? 'Brouillard Urbain'
-                  : weather.weather[0].main === 'Snow'
-                  ? 'Enneigé'
-                  : weather.weather[0].main === 'Rain'
-                  ? 'Pluvieux'
-                  : weather.weather[0].main}
-              </div>
-            </div>
+            {isDataLoading === false ? ( // le loader s'affiche en attendant les données
+              <>
+                <div className="location-box">
+                  <div className="location">
+                    {weather.name} , {weather.sys.country}
+                  </div>
+                  <div className="date">{dateBuilder()}</div>
+                </div>
+                <div className="weatherbox">
+                  <div className="temp">{Math.round(weather.main.temp)}°c</div>
+                  <div className="weather">
+                    {weather.weather[0].main === 'Clouds'
+                      ? 'Nuageux'
+                      : weather.weather[0].main === 'Clear'
+                      ? 'Ensoleillé'
+                      : weather.weather[0].main === 'Mist'
+                      ? 'Brumeux'
+                      : weather.weather[0].main === 'Haze'
+                      ? 'Brouillard Urbain'
+                      : weather.weather[0].main === 'Haze'
+                      ? 'Brouillard'
+                      : weather.weather[0].main === 'Snow'
+                      ? 'Enneigé'
+                      : weather.weather[0].main === 'Rain'
+                      ? 'Pluvieux'
+                      : weather.weather[0].main}
+                  </div>
+                </div>{' '}
+              </>
+            ) : (
+              <Loader />
+            )}
           </div>
         ) : (
           ''
