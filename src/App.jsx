@@ -132,7 +132,7 @@ function App() {
                       ? 'Brumeux'
                       : weather.weather[0].main === 'Haze'
                       ? 'Brouillard Urbain'
-                      : weather.weather[0].main === 'Haze'
+                      : weather.weather[0].main === 'Smoke'
                       ? 'Brouillard'
                       : weather.weather[0].main === 'Snow'
                       ? 'Enneigé'
