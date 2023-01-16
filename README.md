@@ -2,4 +2,4 @@
  
 [https://little-weather-app.vercel.app](https://little-weather-app.vercel.app)
 
-Technologie : React 
+Techno : React, Vite, Dotenv
